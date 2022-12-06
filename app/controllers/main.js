@@ -9,27 +9,90 @@ function getlistthanhvien() {
    thanhvienservice.getListhanhvientAPI()
       .then(function (result) {
          console.log(result.data)
+         renderHTML(result.data);
       })
       .catch(function (error) {
-
+         console.log(error)
       })
 }
 
 getlistthanhvien();
 
-function renderHTML(){
+function renderHTML(data) {
    var content = "";
-   data.foreach(function(thanhvien,index){
-      content +=`
+   data.forEach(function (thanhvien, index) {
+      content += `
       <tr>
-      <td>${index +1}</td>
+      <td>${index + 1}</td>
       <td>${thanhvien.taiKhoan}</td>
       <td>${thanhvien.hoTen}</td>
-      <td>${thanhvien.hoTen}</td>
-
-
-
-
+      <td>${thanhvien.matKhau}</td>
+      <td>${thanhvien.email}</td>
+      <td>${thanhvien.loaiND}</td>
+      <td>${thanhvien.ngonNgu}</td>
+      <td>${thanhvien.moTa}</td>
+      <td>
+      <img width= 100px src="./../../assets/img/${thanhvien.hinhAnh}"/>
+      </td>
+      <td>
+      <button class="btn btn-info" onclick= "deletethanhvien('${thanhvien.id}')">delete</button>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" onclick = "Edit('${thanhvien.id}')">Edit</button>
+      </td>
+      </tr>
       `
-   })
+   });
+   getEle("tblDanhSachNguoiDung").innerHTML = content;
+}
+
+function deletethanhvien(id) {
+   thanhvienservice.deleteAPI(id)
+      .then(function (result) {
+         console.log(id)
+         getlistthanhvien();
+         alert("Delete thành viên")
+      })
+      .catch(function (error) {
+         console.log(error)
+      })
+}
+
+getEle("btnThemNguoiDung").onclick = function () {
+   var title = "Thêm thành viên"
+
+   document.getElementsByClassName("modal-title")[0].innerHTML = title;
+   var button = `<button class= "btnv btn-success" onclick="addthanhvien()">Thêm thành viên</button>`
+   document.getElementsByClassName("modal-footer")[0].innerHTML = button;
+}
+
+function addthanhvien() {
+   var taikhoan = getEle("TaiKhoan").value;
+   var hoten = getEle("HoTen").value;
+   var matkhau = getEle("MatKhau").value;
+   var email = getEle("Email").value;
+   var loaiNguoidung = getEle("loaiNguoiDung").value;
+   var ngonNgu = getEle("loaiNgonNgu").value;
+   var moTa = getEle("MoTa").value;
+   var hinhAnh = getEle("HinhAnh").value;
+   var thanhVien = new thanhvien("", taikhoan, hoten, matkhau, email, loaiNguoidung, ngonNgu, moTa, hinhAnh)
+   thanhvienservice.addthanhvienAPI(thanhVien)
+      .then(function (result) {
+         console.log(result)
+         getlistthanhvien()
+
+      })
+      .catch(function (error) {
+         console.log(error)
+      })
+
+  
+}
+
+
+
+
+function Edit() {
+   var title = "Thay đổi thông tin";
+   document.getElementsByClassName("modal-title")[0].innerHTML = title;
+   var button = `<button class="btn btn-Primary">Cập Nhật</button>`
+   document.getElementsByClassName("modal-footer")[0].innerHTML = button;
 }
