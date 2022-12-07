@@ -78,8 +78,9 @@ function addthanhvien() {
    var thanhVien = new thanhvien("", taikhoan, hoten, matkhau, email, loaiNguoidung, ngonNgu, moTa, hinhAnh)
    thanhvienservice.addthanhvienAPI(thanhVien)
       .then(function (result) {
-         console.log(result)
+         alert("Thêm thanh viên thành công")
          getlistthanhvien()
+         document.getElementsByClassName("close")[0].click();
 
       })
       .catch(function (error) {
@@ -108,14 +109,14 @@ function Edit(id) {
          getEle("loaiNguoiDung").value = thanhvien.loaiND;
          getEle("loaiNgonNgu").value = thanhvien.ngonNgu;
          getEle("MoTa").value = thanhvien.moTa;
-         getEle("HinhAnh").value = thanhvien._hinhAnh;
+         getEle("HinhAnh").value = thanhvien.hinhAnh;
       })
       .catch(function (error) {
          console.log(error)
       })
 }
 
-function updatethanhvien(id){
+function updatethanhvien(id) {
    var taikhoan = getEle("TaiKhoan").value;
    var hoten = getEle("HoTen").value;
    var matkhau = getEle("MatKhau").value;
@@ -124,15 +125,15 @@ function updatethanhvien(id){
    var ngonNgu = getEle("loaiNgonNgu").value;
    var moTa = getEle("MoTa").value;
    var hinhAnh = getEle("HinhAnh").value;
-   var thanhVien = new thanhvien("", taikhoan, hoten, matkhau, email, loaiNguoidung, ngonNgu, moTa, hinhAnh)
+   var thanhVien = new thanhvien(id, taikhoan, hoten, matkhau, email, loaiNguoidung, ngonNgu, moTa, hinhAnh)
    thanhvienservice.updataAPI(thanhVien)
-   .then(function(){
-      alert("cập nhật thành công")
-      getlistthanhvien();
-      document.getElementsByClassName("close")[0].click();
-   })
-   .catch(function(error){
-console.log(error)
-   })
+      .then(function () {
+         alert("cập nhật thành công")
+         getlistthanhvien();
+         document.getElementsByClassName("close")[0].click();
+      })
+      .catch(function (error) {
+         console.log(error)
+      })
 }
 

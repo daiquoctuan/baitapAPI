@@ -16,27 +16,27 @@ function thanhvienService() {
         })
     }
 
-    this.addthanhvienAPI = function(thanhvien){
-       return axios({
+    this.addthanhvienAPI = function (thanhvien) {
+        return axios({
             url: "https://637b65ac6f4024eac20c61f7.mockapi.io/api/thanhvien",
             method: "post",
             data: thanhvien,
         })
-        
+
     }
-    this.getthanhvienAPI = function(id){
+    this.getthanhvienAPI = function (id) {
         return axios({
             url: `https://637b65ac6f4024eac20c61f7.mockapi.io/api/thanhvien/${id}`,
-            method: "get",
-           
+            method: "Get",
+
         })
     }
-    this.updataAPI = function(thanhvien){
-axios ({
-    url:`https://637b65ac6f4024eac20c61f7.mockapi.io/api/thanhvien/${thanhvien.id}`,
-    method:"post",
-    data: thanhvien,
-})
+    this.updataAPI = function(thanhvien) {
+        return axios({
+            url: `https://637b65ac6f4024eac20c61f7.mockapi.io/api/thanhvien/${thanhvien.id}`,
+            method: "put",
+            data: thanhvien,
+        })
 
 
 
