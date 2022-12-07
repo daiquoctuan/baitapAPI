@@ -31,6 +31,17 @@ function thanhvienService() {
            
         })
     }
+    this.updataAPI = function(thanhvien){
+axios ({
+    url:`https://637b65ac6f4024eac20c61f7.mockapi.io/api/thanhvien/${thanhvien.id}`,
+    method:"post",
+    data: thanhvien,
+})
+
+
+
+
+    }
 
 }
 

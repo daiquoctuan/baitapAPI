@@ -63,7 +63,9 @@ getEle("btnThemNguoiDung").onclick = function () {
    var button = `<button class= "btnv btn-success" onclick="addthanhvien()">Thêm thành viên</button>`
    document.getElementsByClassName("modal-footer")[0].innerHTML = button;
 }
+function formthanhvien() {
 
+}
 function addthanhvien() {
    var taikhoan = getEle("TaiKhoan").value;
    var hoten = getEle("HoTen").value;
@@ -84,15 +86,53 @@ function addthanhvien() {
          console.log(error)
       })
 
-  
+
 }
 
 
 
 
-function Edit() {
+function Edit(id) {
    var title = "Thay đổi thông tin";
    document.getElementsByClassName("modal-title")[0].innerHTML = title;
-   var button = `<button class="btn btn-Primary">Cập Nhật</button>`
+   var button = `<button class="btn btn-success" onclick="updatethanhvien('${id}')">Cập Nhật</button>`
    document.getElementsByClassName("modal-footer")[0].innerHTML = button;
+   thanhvienservice.getthanhvienAPI(id)
+      .then(function (result) {
+         var thanhvien = result.data;
+
+         getEle("TaiKhoan").value = thanhvien.taiKhoan;
+         getEle("HoTen").value = thanhvien.hoTen;
+         getEle("MatKhau").value = thanhvien.matKhau;
+         getEle("Email").value = thanhvien.email;
+         getEle("loaiNguoiDung").value = thanhvien.loaiND;
+         getEle("loaiNgonNgu").value = thanhvien.ngonNgu;
+         getEle("MoTa").value = thanhvien.moTa;
+         getEle("HinhAnh").value = thanhvien._hinhAnh;
+      })
+      .catch(function (error) {
+         console.log(error)
+      })
 }
+
+function updatethanhvien(id){
+   var taikhoan = getEle("TaiKhoan").value;
+   var hoten = getEle("HoTen").value;
+   var matkhau = getEle("MatKhau").value;
+   var email = getEle("Email").value;
+   var loaiNguoidung = getEle("loaiNguoiDung").value;
+   var ngonNgu = getEle("loaiNgonNgu").value;
+   var moTa = getEle("MoTa").value;
+   var hinhAnh = getEle("HinhAnh").value;
+   var thanhVien = new thanhvien("", taikhoan, hoten, matkhau, email, loaiNguoidung, ngonNgu, moTa, hinhAnh)
+   thanhvienservice.updataAPI(thanhVien)
+   .then(function(){
+      alert("cập nhật thành công")
+      getlistthanhvien();
+      document.getElementsByClassName("close")[0].click();
+   })
+   .catch(function(error){
+console.log(error)
+   })
+}
+
